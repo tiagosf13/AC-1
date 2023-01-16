@@ -1,0 +1,31 @@
+# Mapa de registos
+# i : $t0
+# &array : $t1 (array pointer)
+# next_address_offset : $t2
+# soma : $t3
+# value : $t4
+	.data
+array	:	.word 7692, 23, 5, 234
+	.eqv print_int10, 1
+	.eqv SIZE, 4
+	.text
+	.globl main
+	
+	
+main	: 	li $t3, 0			# soma = 0;
+		li $t0, 0			# i = 0;
+		
+		
+while	:	bge $t0, SIZE, endw		# while(i < size){
+		la $t1, array			#				loading array pointer &array on index 0
+		sll $t2, $t0, 2			# 				next_address_offset = i * 4;		
+		add $t1, $t1, $t2		# 				&str = &str + next_address_offset / moving the pointer to the next index (1)
+		lw $t4, 0($t1)			# value = str[i];						value = &str[0]	 / first element of the place where the pointer is pointed		
+		add $t3, $t3, $t4		# soma = soma + value;
+		addi $t0, $t0, 1		# i++;}
+		j	while
+		
+endw	:	or $a0, $0, $t3 		
+		li $v0, print_int10
+		syscall				# print_int10(soma);
+		jr $ra 				# termina o programa

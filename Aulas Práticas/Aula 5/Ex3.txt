@@ -1,0 +1,10 @@
+print_string("Insira os valores:\n")
+for(i = 0; i < SIZE; i++){
+	
+	lista[i] = read_int()
+}
+
+for(i = 0; i < SIZE; i++){
+	print_int10(lista[i])
+	print_string("; ")
+}
